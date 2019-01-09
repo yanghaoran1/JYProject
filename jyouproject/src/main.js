@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import './assets/font_49hzi8wu5k8/iconfont'
+// import './assets/font_49hzi8wu5k8/iconfont'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
