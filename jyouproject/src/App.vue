@@ -20,6 +20,28 @@ import 'mint-ui/lib/style.css'
 import iconfont from './assets/aliIcon/iconfont.js'
 import axios from 'axios';
 Vue.prototype.$axios = axios;
+// loading效果
+// 利用axios拦截器全局设置
+import { Indicator } from 'mint-ui';
+axios.interceptors.request.use(config => {
+    Indicator.open();
+    // console.log('config:',config);
+    // config.params.token = '10086';
+    return config
+}, error => {
+    Indicator.close();
+    
+    return Promise.reject(error)
+})
+// http响应拦截器
+axios.interceptors.response.use(data => {
+    // 响应成功关闭loading
+    Indicator.close();
+    return data
+}, error => {
+    Indicator.close();
+    return Promise.reject(error)
+})
 export default {
   data(){
     return{

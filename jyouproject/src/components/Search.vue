@@ -1,7 +1,7 @@
 <template>
     <div class="searchPage">
         <div class="searchPage_h">
-            <div class="backbtn">
+            <div class="backbtn" @click="searchBack()">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-fanhui"></use>
                 </svg>
@@ -9,7 +9,7 @@
             <span >搜券</span>
             <span style="color:#ccc;opacity:0.7;">搜全网</span>
         </div>
-        <mt-search v-model="value" placeholder="天猫超市">
+        <mt-search v-model="value" placeholder="天猫超市" @input="search">
             <mt-cell
                 
                  >
@@ -24,70 +24,40 @@
         data(){
             return{
                 value:'',
-
+            }
+        },
+        methods:{
+            searchBack(){
+                this.$router.push('Home');
+            },
+            search(){
+                console.log(this.value);
             }
         },
         created(){
-            // this.$axios.post('http://localhost:4008/api',
-               
-            //         { 
-            //             appid:'709123',
-            //             length:'93',
-            //             data:'FhSel7Zx3fXsuRD0MjZNep0DCkCoVFBuZ3PVAOfIV4PEnEu0TdIS5d2KQwZBuKatfITDkDmTP2RiqiYhqFdqI9oEYxdPwJnP41ABo/el5qCSgsFTYdlOkYrXIFPZ'
-            //         }
-            //         // {
-            //         //     headers:{
-            //         //         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            //         //         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
-            //         //         'Content-Type': 'application/x-www-form-urlencoded',
-            //         //         'Origin': null,
-            //         //         'Host': 'mapi.dataoke.com',
-            //         //         'Upgrade-Insecure-Requests': '1',
-            //         //         //'X-DevTools-Emulate-Network-Conditions-Client-Id': '3E416FD1AB3D9A443CF6B18796489D40'
-            //         //     }
-            //         // }                    
-            // )
-            // .then(res=>{
-            //     console.log(res);
-            // })
-            // .catch(error=>{
-            //     console.log(err)
-            // })
-            // this.$axios({
-            //     method:'post',
-            //     url:`/api`,
-            //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            //     data:{
-            //     appid: '709123',
-            //     length: '93',
-            //     data:'FhSel7Zx3fXsuRD0MjZNep0DCkCoVFBuZ3PVAOfIV4PEnEu0TdIS5d2KQwZBuKatfITDkDmTP2RiqiYhqFdqI9oEYxdPwJnP41ABo/el5qCSgsFTYdlOkYrXIFPZ'
-            //     },
-            //     // transformRequest: [function (data) {
-            //     //     let ret = ''
-            //     //     for (let it in data) {
-            //     //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            //     // }
-            //     // ret = ret.slice(0,-1);
-            //     // return ret
-            //     // }]
-            //     }).then(res=>{
-            //     let data = res;
-            //     // this.likeList = data;
-            //     console.log(data)
-            //     }).catch((err)=>{
-                
-            // });
+            this.$axios.get('https://m.juanpi.com/keywords/search?plateform=m&zy_ids=c4_l4&item=')
+            .then(res=>{
+                console.log(res)
+            })
         }
     }
 </script>
 <style lang="scss">
     .searchPage{
-        height:4.625rem;
+        height:3.625rem;
         background: linear-gradient(to left,#FA4DBE 0,#FBAA58 100%);
         border-bottom-color: transparent;
         padding: .5rem .625rem;
         a{
-            font-size: .75rem;
+            font-size: .32rem;
+            color:#fff;
+            background: #FFB925;
+            width: 1.813333rem;
+            height: .746667rem;
+            line-height: .746667rem;
+            text-align: center;
+            border-radius: .533333rem;
+            margin: 0;
         }
         .mint-searchbar{
             padding: 0;
@@ -95,7 +65,7 @@
         }
         .searchPage_h{
             height: 1.875rem;
-            margin:.625rem 0rem;
+            // margin:.625rem 0rem;
             text-align: center;
             color: #fff;
             .icon {
