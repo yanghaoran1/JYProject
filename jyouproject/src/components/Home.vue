@@ -11,10 +11,10 @@
           </svg>
       </mt-button>
   </mt-header>
-    <div class="center"
+    <!-- <div class="center"
     style="height:1000px">
 
-    </div>
+    </div> -->
     
   </div>
 </template>
@@ -54,13 +54,13 @@ export default {
   background: #fff;
   margin-left: 10px;
   color: #ccc;
-  width: 270px;
+  width: 8.5rem;
 }
 .page .search_r{
   margin-right: 10px;
 }
 .page{
-  height: 36px;
+  height:1.1875rem;
   background: linear-gradient(to left,#FA4DBE 0,#FBAA58 100%);
   padding: 5px 0px;
 }

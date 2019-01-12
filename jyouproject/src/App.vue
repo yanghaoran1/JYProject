@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <mt-tabbar v-model="selected">
+    <mt-tabbar v-model="selected" class="bttabbar">
       <mt-tab-item :id="tab.name" v-for="tab in tabs" :key="tab.name" @click.native="goto(tab.path)">
         <myicons :type="tab.icon" v-model="selected"/>
         {{tab.text}}
@@ -18,6 +18,8 @@ Vue.use(myicons);
 Vue.use(MintUI);
 import 'mint-ui/lib/style.css'
 import iconfont from './assets/aliIcon/iconfont.js'
+import axios from 'axios';
+Vue.prototype.$axios = axios;
 export default {
   data(){
     return{
@@ -52,21 +54,20 @@ export default {
     goto(path,val){
       // let paths = path.path;
       this.$router.push({path});
-      // console.log(this.active)
     }
   }
 }
 </script>
 
 <style>
-.mint-tabbar{
-  position: fixed;
-  bottom: 0;
-}
 .mint-tabbar>.mint-tab-item.is-selected{
   color:rgb(248, 6, 6);
 }
 .is-selected path{
   fill: rgb(248, 6, 6);
+}
+.bttabbar{
+  height:1.125rem;
+  position: fixed;
 }
 </style>

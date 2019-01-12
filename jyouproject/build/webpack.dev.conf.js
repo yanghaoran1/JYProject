@@ -21,12 +21,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devtool: config.dev.devtool,
 
   // these devServer options should be customized in /config/index.js
-  devServer: {
+  devServer:{
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
+    },
+    proxy:{//代理服务器
+      '/api':{//以'/dbapi'开头的请求都会进入该代理
+      target:"http://mapi.dataoke.com/",//代理目标服务器
+      changeOrigin: true,
+      pathRewrite: {'^/api' : ''}, //替换部分路径
+      }
     },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
