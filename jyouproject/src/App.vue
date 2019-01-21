@@ -82,6 +82,9 @@ export default {
 </script>
 
 <style>
+.app{
+  /* display:flex; */
+} 
 .mint-tabbar>.mint-tab-item.is-selected{
   color:rgb(248, 6, 6);
 }
@@ -90,6 +93,9 @@ export default {
 }
 .bttabbar{
   height:1.125rem;
+  /* flex: 1; */
   position: fixed;
+  margin-top: 1.2rem;
+  z-index: 100;
 }
 </style>

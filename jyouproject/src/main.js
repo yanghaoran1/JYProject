@@ -3,10 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import './assets/font_49hzi8wu5k8/iconfont'
+import Cube from 'cube-ui'
+Vue.use(Cube)
+import 'cube-ui/lib/style.css'
+
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

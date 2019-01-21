@@ -28,18 +28,19 @@
         },
         methods:{
             searchBack(){
-                this.$router.push('Home');
+                // this.$router.push('Home');
+                this.$router.back(-1);
             },
             search(){
                 console.log(this.value);
             }
         },
-        created(){
-            this.$axios.get('https://m.juanpi.com/keywords/search?plateform=m&zy_ids=c4_l4&item=')
-            .then(res=>{
-                console.log(res)
-            })
-        }
+        // created(){
+        //     this.$axios.get('https://m.juanpi.com/keywords/search?plateform=m&zy_ids=c4_l4&item=')
+        //     .then(res=>{
+        //         console.log(res)
+        //     })
+        // }
     }
 </script>
 <style lang="scss">

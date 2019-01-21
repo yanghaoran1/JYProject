@@ -33,18 +33,12 @@
     </div>
 
     <!-- 顾客福利 -->
-    <div class="welfare">
+    <!-- <div class="welfare">
       <a :href="welfare[0].child[0].url">
         <img :src="welfare[0].child[0].pic">
       </a>
-    </div>
+    </div> -->
 
-    <!-- 年货 -->
-    <div class="Stocking">
-      <a :href="Stocking[0].child[0].url">
-        <img :src="Stocking[0].child[0].pic">
-      </a>
-    </div>
     
     <!-- 秒杀活动 -->
     <div class="seckill">
@@ -60,17 +54,15 @@
         </a>
       </div>
     </div>
-  <!-- 打折活动 -->
-    <div class="discount">
-      <a :href="item.child[0].url" v-for="item in discount" :key="item.child[0].bd_id">
-        <img :src="item.child[0].pic" >
-      </a>
-    </div>
 
-    <div class="discountbt">
-      <a :href="item.child[0].url" v-for="item in discountbt" :key="item.child[0].bd_id">
-        <img :src="item.child[0].pic" >
-      </a>
+    <div class="goods">
+      <div class="goodsbox" v-for="item in goods" :key="item.goods_id">
+        <a :href="item.goods_jump_url">
+          <img :src="item.pic_url" >
+        </a>
+        <p>{{item.coupon_tips}}</p>
+        <p class="goodstitle">{{item.title}}</p>
+      </div>
     </div>
 
   </div>
@@ -86,15 +78,11 @@ Vue.component(SwipeItem.name, SwipeItem);
 export default {
   data () {
     return {
-      nn:'',
       data:[],
       goodlist:[],
       goodlistTab:[],
-      welfare:[{child:[{url:'',pic:''}]}],
-      Stocking:[{child:[{url:'',pic:''}]}],
+      // welfare:[{child:[{url:'',pic:''}]}],
       seckill:[{child:[{url:'',pic:''}]},{child:[{url:'',pic:''},[{url:'',pic:''}]]}],
-      discount:[],
-      discountbt:[],
       goods:[]
     }
   },
@@ -103,24 +91,30 @@ export default {
       this.$router.push(path)
     }
   },
+  // https://webservice.juanpi.com/api/getIndexFirstPaintInfo?cid=&zy_ids=p8_c4_l4_0&app_name=zhe&app_version=&platform=&catname=newest_zhe
   created() {
     this.$axios
     .get('https://webservice.juanpi.com/api/getIndexFirstPaintInfo?cid=&zy_ids=p8_c4_l4_0&app_name=zhe&app_version=&platform=&catname=newest_zhe')
-    .then(res=>{
-      // console.log(res.data.adsInfo.block[0].multi_block);
+    .then(res=>{  
       let data = res.data.adsInfo.slide_ads.config.slide;
       this.data = data;
+      console.log(this.data)
       let goodlist = res.data.adsInfo.block[0].multi_block;
+      
       this.goodlist = goodlist;console.log(this.goodlist)
       this.goodlistTab = goodlist[0].data;
-      this.welfare = goodlist[1].data;
-      this.Stocking = goodlist[2].data;
-      this.seckill = goodlist[3].data;
-      this.discount = goodlist[4].data;
-      this.discountbt = goodlist[5].data;
-      this.goods = goodlist[9].data;
-      console.log(this.goodlist)
-    })
+      // this.welfare = goodlist[1].data;
+      this.seckill = goodlist[1].data;
+    });
+
+    this.$axios
+    .get('https://webservice.juanpi.com/api/getGoods?page=1&zy_ids=p8_c4_l4&app_name=zhe&catname=tab_hpzc&flag=tab_hpzc')
+    .then(res=>{
+      
+      this.goods = res.data.data.goods;
+      console.log(this.goods)
+      
+    });
   },
   mounted() {
     
@@ -161,6 +155,9 @@ export default {
   display: flex;
   width: 100%;
 }
+.HomeCenter>div{
+  width: 100%;
+}
 .HomeCenter img{
   width: 100%;
   height: 100%;
@@ -169,7 +166,6 @@ export default {
   display: block;
 }
 .swiper{
-    width: 100%;
     height: 4rem;
 }
 .JPgoods{
@@ -179,11 +175,8 @@ export default {
   flex-direction: row;
   justify-content: center;
 }
-.welfare{
-  width: 100%;
-}
+
 .Stocking{
-  width: 100%;
   height: 3.4368rem;
 }
 .seckill{
@@ -198,17 +191,13 @@ export default {
   height: 6.7184rem;
   float: left;
 }
-.discount{
-  width: 100%;
-  height: 2.6144rem;
-}
+
 .discount a{
   width:50%;
   height: 100%;
   float: left;
 }
 .discountbt{
-  width: 100%;
   height: 2.6144rem;
 }
 .discountbt a{
@@ -216,4 +205,28 @@ export default {
   height: 100%;
   float: left;
 }
+.goodsbox{
+  width: 49.8%;
+  float: left;
+  height:6.4rem;
+  border-top: 1px solid rgb(245, 242, 242);
+  border-right: 1px solid rgb(245, 242, 242);
+}
+.goods .goodsbox:nth-child(2n){
+  border-right:0;
+  margin: 0;
+}
+.goodsbox p{
+  font-size:.426667rem;
+  margin: 0 0 0 .266667rem;
+  color: #ff464e;
+  margin-right: 0.17066666666666666rem;
+}
+.goodsbox .goodstitle{
+  font-family: PingFang-SC-Regular,Helvetica Neue,Helvetica,Droid Sans Fallback,microsoft yahei,sans-serif;
+  font-size:.32rem;
+  color: #3b3b3b;
+}
+
+
 </style>

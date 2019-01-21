@@ -2,8 +2,10 @@ const proxy = require('http-proxy-middleware');
 const express = require('express');
 
 let app = express();
-
+// 利用中间件实现静态资源服务器
 app.use(express.static('./'))
+
+let Router = express.Router();
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -20,19 +22,15 @@ app.all('*', function(req, res, next) {
 
 // 服务器代理
 //如果请求以/sinaapi开头，则进入代理模式
-//http:localhost:4008/sinaapi/api/config/list 转成 https://m.weibo.cn/sinaapi/api/config/list
-app.post('/api', proxy({
-    "target": "http://mapi.dataoke.com",
+// http://localhost:4008/sinaapi/api/config/list 转成 https://m.weibo.cn/sinaapi/api/config/list
+app.use('/jpapi', proxy({
+    "target": "https://webservice.juanpi.com/api",
     "changeOrigin": true,
     "pathRewrite": {
-        "^/api" : "/"
+        "^/jpapi" : "/"
     }
 }));
 
-// app.post('/api',(req,res)=>{
-//     console.log(res)
-//     res.send(res.body);
-// })
 
 app.listen(4008, function(){
     console.log('Server running on http://localhost:4004');
